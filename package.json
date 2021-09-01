@@ -40,12 +40,12 @@
     "prettier": "^2.3.2",
     "semantic-release": "^17.4.7"
   },
+  "optionalDependencies": {
+    "fsevents": "^2.3.2"
+  },
   "config": {
     "commitizen": {
       "path": "git-cz"
     }
-  },
-  "optionalDependencies": {
-    "fsevents": "^2.3.2"
   }
 }
