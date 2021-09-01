@@ -9,6 +9,9 @@
     "type": "git",
     "url": "https://github.com/Paciolan/raw-yaml-merge.git"
   },
+  "release": {
+    "branches": ["main"]
+  },
   "scripts": {
     "prepare": "husky install",
     "test": "jest",
