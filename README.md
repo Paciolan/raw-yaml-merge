@@ -1,6 +1,6 @@
 # Raw YAML Merge
 
-Merge YAML files without first parsing them into JSON.
+Merge YAML files while preserving anchors and aliases.
 
 ## The Problem
 
