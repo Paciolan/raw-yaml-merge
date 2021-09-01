@@ -6,6 +6,7 @@
   "author": "",
   "license": "MIT",
   "scripts": {
+    "prepare": "husky install",
     "test": "jest",
     "lint": "eslint src",
     "lint:fix": "npm run lint -- --fix"
@@ -19,6 +20,7 @@
   "devDependencies": {
     "eslint": "^7.32.0",
     "eslint-plugin-prettier": "^4.0.0",
+    "husky": "^7.0.2",
     "jest": "^27.1.0"
   }
 }
