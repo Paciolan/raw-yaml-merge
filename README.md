@@ -59,28 +59,37 @@ npm install @paciolan/raw-yaml-merge
 
 ## Code
 
-```javascript
-const merge = require("@paciolan/raw-yaml-merge");
-
-const mainYaml = `
+```yaml
+# main.yaml
 colors:
   primary: &primary-color "black"
 body:
   color: *primary-color
-`;
+```
 
-const overrideYaml = `
+```yaml
+# overrides.yaml
 colors:
   primary: "orange"
-`;
+```
 
-const output = merge(mainYaml, overrideYaml);
+```javascript
+const merge = require("@paciolan/raw-yaml-merge");
+const fs = require("fs");
 
-console.log(output);
-// colors:
-//   primary: orange
-// body:
-//   color: orange
+const main = fs.readFileSync(`${__dirname}/main.yml`, "utf8");
+const overrides = fs.readFileSync(`${__dirname}/overrides.yml`, "utf8");
+
+const merged = merge(main, overrides);
+fs.writeFileSync(`${__dirname}/output.yml`, merged);
+```
+
+```yaml
+# output.yml
+colors:
+  primary: orange
+body:
+  color: orange
 ```
 
 ## Merge Types Supported
