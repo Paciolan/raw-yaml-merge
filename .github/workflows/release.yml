@@ -1,12 +1,9 @@
 name: Release
 on:
-  push:
-    branches:
-      - main
   workflow_run:
     workflows: ["Lint"]
-    types:
-      - completed
+    branches: ["main"]
+    types: ["completed"]
 
 jobs:
   release:
