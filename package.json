@@ -20,6 +20,7 @@
   "publishConfig": {
     "access": "public"
   },
+  "main": "src/merge.js",
   "scripts": {
     "prepare": "husky install",
     "test": "jest",
