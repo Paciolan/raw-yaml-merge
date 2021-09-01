@@ -2,7 +2,10 @@
   "name": "@paciolan/raw-yaml-merge",
   "version": "0.0.0-development",
   "description": "Merge YAML files while preserving anchors and aliases.",
-  "keywords": ["yaml", "merge"],
+  "keywords": [
+    "yaml",
+    "merge"
+  ],
   "author": "Paciolan",
   "license": "MIT",
   "repository": {
@@ -10,7 +13,9 @@
     "url": "https://github.com/Paciolan/raw-yaml-merge.git"
   },
   "release": {
-    "branches": ["main"]
+    "branches": [
+      "main"
+    ]
   },
   "scripts": {
     "prepare": "husky install",
@@ -38,5 +43,8 @@
     "commitizen": {
       "path": "git-cz"
     }
+  },
+  "optionalDependencies": {
+    "fsevents": "^2.3.2"
   }
 }
