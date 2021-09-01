@@ -38,7 +38,7 @@ body:
     expect(actual).toBe(expected);
   });
 
-  test("replaces array", () => {
+  test("replaces SEQ", () => {
     const main = `array: [1, 2, 3]`;
     const overrides = `array: [4, 5, 6]`;
     const expected = `array:
@@ -50,7 +50,7 @@ body:
     expect(actual).toBe(expected);
   });
 
-  test("override changes alias", () => {
+  test("override changes ALIAS", () => {
     const main = `
 colors:
   primary: &primary-color "red"
@@ -73,7 +73,7 @@ box:
     expect(merged).toBe(expected);
   });
 
-  test("override changes scalar to alias", () => {
+  test("override changes SCALAR to ALIAS", () => {
     const main = `
 colors:
   primary: &primary-color "red"

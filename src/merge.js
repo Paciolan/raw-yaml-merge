@@ -1,53 +1,39 @@
 const yaml = require("yaml");
+const { getType } = require("./lib/getType");
 
-const getType = (node) =>
-  yaml.isAlias(node) ? "ALIAS"
-    : yaml.isDocument(node) ? "DOCUMENT"
-    : yaml.isMap(node) ? "MAP"
-    : yaml.isPair(node) ? "PAIR"
-    : yaml.isScalar(node) ? "SCALAR"
-    : yaml.isSeq(node) ? "SEQ"
-    : yaml.isNode(node) ? "NODE"
-    : "UNKNOWN"; // prettier-ignore
+const mergeSingleItem = ({ main, override }) => {
+  const mainType = getType(override.value);
+  const overrideType = getType(main.value);
 
-const mergeSingleItem = ({ mainNode, pair }) => {
-  if (yaml.isScalar(mainNode.value) && yaml.isScalar(pair.value)) {
-    // change SCALAR to SCALAR
-    mainNode.value.value = pair.value.value;
-  } else if (yaml.isSeq(mainNode.value) && yaml.isSeq(pair.value)) {
-    // change SEQ to SEQ
-    mainNode.value = pair.value;
-  } else if (yaml.isAlias(mainNode.value) && yaml.isAlias(pair.value)) {
-    // change ALIAS to ALIAS
-    mainNode.value = pair.value;
-  } else if (yaml.isScalar(mainNode.value) && yaml.isAlias(pair.value)) {
-    // change SCALAR to ALIAS
-    mainNode.value = pair.value;
-  } else if (yaml.isAlias(mainNode.value) && yaml.isScalar(pair.value)) {
-    // change ALIAS to SCALAR
-    mainNode.value = pair.value;
+  if (mainType === "SCALAR" && overrideType === "SCALAR") {
+    main.value.value = override.value.value;
+  } else if (mainType === "SEQ" && overrideType === "SEQ") {
+    main.value = override.value;
+  } else if (mainType === "ALIAS" && overrideType === "ALIAS") {
+    main.value = override.value;
+  } else if (mainType === "ALIAS" && overrideType === "SCALAR") {
+    main.value = override.value;
+  } else if (mainType === "SCALAR" && overrideType === "ALIAS") {
+    main.value = override.value;
   } else {
-    const T1 = getType(pair.value);
-    const T2 = getType(mainNode.value);
-    throw new Error(`Cannot merge "${pair.key}" ${T1} into ${T2}`);
+    throw new Error(`Cannot merge "${override.key}" ${mainType} into ${overrideType}`);
   }
 };
 
 const mergeItems = (mainItems, overrideItems) => {
-  for (let pair of overrideItems) {
-    const { key, value } = pair;
-    const mainNode = mainItems.find((item) => item.key.value === key.value);
+  for (let override of overrideItems) {
+    const main = mainItems.find((item) => item.key.value === override.key.value);
 
-    if (yaml.isPair(mainNode)) {
-      if (yaml.isMap(value)) {
+    if (yaml.isPair(main)) {
+      if (yaml.isMap(override.value)) {
         // Keep searching. Your princess is in another castle.
-        mergeItems(mainNode.value.items, value.items);
+        mergeItems(main.value.items, override.value.items);
       } else {
-        mergeSingleItem({ mainNode, pair });
+        mergeSingleItem({ main, override });
       }
     } else {
       // mainItems is missing Pair. Push override into mainItems.
-      mainItems.push(pair);
+      mainItems.push(override);
     }
   }
 };
