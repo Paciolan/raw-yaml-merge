@@ -1,15 +1,20 @@
 {
-  "name": "raw-yaml-merge",
-  "version": "1.0.0",
-  "description": "",
-  "keywords": [],
-  "author": "",
+  "name": "@paciolan/raw-yaml-merge",
+  "version": "0.0.0-development",
+  "description": "Merge YAML files while preserving anchors and aliases.",
+  "keywords": ["yaml", "merge"],
+  "author": "Paciolan",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Paciolan/raw-yaml-merge.git"
+  },
   "scripts": {
     "prepare": "husky install",
     "test": "jest",
     "lint": "eslint src",
-    "lint:fix": "npm run lint -- --fix"
+    "lint:fix": "npm run lint -- --fix",
+    "semantic-release": "semantic-release"
   },
   "dependencies": {
     "@commitlint/cli": "^13.1.0",
@@ -23,7 +28,8 @@
     "eslint": "^7.32.0",
     "eslint-plugin-prettier": "^4.0.0",
     "husky": "^7.0.2",
-    "jest": "^27.1.0"
+    "jest": "^27.1.0",
+    "semantic-release": "^17.4.7"
   },
   "config": {
     "commitizen": {
