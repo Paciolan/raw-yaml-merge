@@ -8,7 +8,6 @@
   ],
   "author": "Paciolan",
   "license": "MIT",
-  "private":"false",
   "repository": {
     "type": "git",
     "url": "https://github.com/Paciolan/raw-yaml-merge.git"
@@ -17,6 +16,9 @@
     "branches": [
       "main"
     ]
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "scripts": {
     "prepare": "husky install",
