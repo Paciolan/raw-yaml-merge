@@ -107,5 +107,3 @@ In the event an incompatible type is merged, the merge will throw an Exception:
 ```
 Error: Cannot merge "${KEY}" ${TYPE} into ${TYPE}
 ```
-
-.
