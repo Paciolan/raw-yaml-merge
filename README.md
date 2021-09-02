@@ -74,14 +74,25 @@ colors:
 ```
 
 ```javascript
-const merge = require("@paciolan/raw-yaml-merge");
+const { merge, parse } = require("@paciolan/raw-yaml-merge");
 const fs = require("fs");
 
 const main = fs.readFileSync(`${__dirname}/main.yml`, "utf8");
 const overrides = fs.readFileSync(`${__dirname}/overrides.yml`, "utf8");
 
 const merged = merge(main, overrides);
-fs.writeFileSync(`${__dirname}/output.yml`, merged);
+const output = parse(merged);
+
+fs.writeFileSync(`${__dirname}/merged.yml`, merged);
+fs.writeFileSync(`${__dirname}/output.yml`, output);
+```
+
+```yaml
+# merged.yml
+colors:
+  primary: &primary-color "orange"
+body:
+  color: *primary-color
 ```
 
 ```yaml
@@ -106,4 +117,17 @@ In the event an incompatible type is merged, the merge will throw an Exception:
 
 ```
 Error: Cannot merge "${KEY}" ${TYPE} into ${TYPE}
+```
+
+## Options
+
+An options object is passed through to the YAML.parseDocument method. Refer to the [yaml documentation](https://eemeli.org/yaml/#yaml) for options more details.
+
+```javascript
+const options = {
+  maxAliasAcount: 10000,
+};
+
+const merged = merge(main, overrides, options);
+const output = parse(merged, options);
 ```

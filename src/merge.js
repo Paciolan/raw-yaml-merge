@@ -1,4 +1,4 @@
-const yaml = require("yaml");
+const YAML = require("yaml");
 const { getType } = require("./lib/getType");
 
 const mergeSingleItem = ({ main, override }) => {
@@ -24,8 +24,8 @@ const mergeItems = (mainItems, overrideItems) => {
   for (let override of overrideItems) {
     const main = mainItems.find((item) => item.key.value === override.key.value);
 
-    if (yaml.isPair(main)) {
-      if (yaml.isMap(override.value)) {
+    if (YAML.isPair(main)) {
+      if (YAML.isMap(override.value)) {
         // Keep searching. Your princess is in another castle.
         mergeItems(main.value.items, override.value.items);
       } else {
@@ -38,13 +38,13 @@ const mergeItems = (mainItems, overrideItems) => {
   }
 };
 
-const merge = (rawYaml, overrideYaml) => {
-  const mainDoc = yaml.parseDocument(rawYaml);
-  const overrideDoc = yaml.parseDocument(overrideYaml);
+const merge = (rawYaml, overrideYaml, options) => {
+  const mainDoc = YAML.parseDocument(rawYaml, options);
+  const overrideDoc = YAML.parseDocument(overrideYaml, options);
 
   mergeItems(mainDoc.contents.items, overrideDoc.contents.items);
 
-  return yaml.stringify(mainDoc);
+  return mainDoc.toString();
 };
 
 module.exports = {

@@ -1,7 +1,7 @@
 const { merge } = require("../merge");
 
 describe("merge.js", () => {
-  test("changes the anchor also set the alias", () => {
+  test("changes the anchor", () => {
     const main = `
 colors:
   primary: &primary-color "#444"
@@ -11,9 +11,9 @@ body:
 colors:
   primary: "orange"`;
     const expected = `colors:
-  primary: orange
+  primary: &primary-color "orange"
 body:
-  color: orange
+  color: *primary-color
 `;
     const actual = merge(main, overrides);
     expect(actual).toBe(expected);
@@ -29,10 +29,10 @@ body:
 colors:
   custom: pink`;
     const expected = `colors:
-  primary: "#444"
+  primary: &primary-color "#444"
   custom: pink
 body:
-  color: "#444"
+  color: *primary-color
 `;
     const actual = merge(main, overrides);
     expect(actual).toBe(expected);
@@ -41,10 +41,7 @@ body:
   test("replaces SEQ", () => {
     const main = `array: [1, 2, 3]`;
     const overrides = `array: [4, 5, 6]`;
-    const expected = `array:
-  - 4
-  - 5
-  - 6
+    const expected = `array: [ 4, 5, 6 ]
 `;
     const actual = merge(main, overrides);
     expect(actual).toBe(expected);
@@ -63,10 +60,10 @@ box:
   color: *secondary-color`;
 
     const expected = `colors:
-  primary: red
-  secondary: orange
+  primary: &primary-color "red"
+  secondary: &secondary-color "orange"
 box:
-  color: orange
+  color: *secondary-color
 `;
 
     const merged = merge(main, overrides);
@@ -83,9 +80,9 @@ box:
 box:
   color: *primary-color`;
     const expected = `colors:
-  primary: red
+  primary: &primary-color "red"
 box:
-  color: red
+  color: *primary-color
 `;
     const merged = merge(main, overrides);
     expect(merged).toBe(expected);
@@ -101,7 +98,7 @@ box:
 box:
   color: pink`;
     const expected = `colors:
-  primary: red
+  primary: &primary-color "red"
 box:
   color: pink
 `;
