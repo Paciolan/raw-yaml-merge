@@ -1,5 +1,5 @@
 const YAML = require("yaml");
-const merge = require("./merge");
+const { merge } = require("./merge");
 
 module.exports = {
   merge,
